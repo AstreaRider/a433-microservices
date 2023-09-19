@@ -1,17 +1,18 @@
 #!/bin/sh
-# membuat variable untuk nama image, tag, dan username docker hub
-image_name="karsajobs"
-image_tag="latest"
-username_docker_hub="10969ra"
+# membuat variable untuk nama image, tag, dan username Github Container Registry
+container_registry="ghcr.io"
+username="astrearider"
+repository="karsajobs"
+tag="latest"
  
 # membuat docker image sesuai dengan nama variable
-docker build -t "$image_name:$image_tag" .
+docker build -t "$repository:$tag" .
  
-# mengubah nama image agar sesuai dengan format Docker Hub
-docker tag "$image_name:$image_tag" "$username_docker_hub/$image_name:$image_tag"
+# mengubah nama image agar sesuai dengan format Github Container Registry
+docker tag "$repository:$tag" "$container_registry/$username/$repository:$tag"
  
-# melakukan login ke Docker Hub
-echo $PASSWORD_DOCKER_HUB | docker login -u "$username_docker_hub" --password-stdin
+# melakukan login ke Github Container Registry
+echo $CR_PAT | docker login "$container_registry" -u "$username" --password-stdin
  
-# Mengunggah image ke Docker Hub
-docker push "$username_docker_hub/$image_name:$image_tag"
+# Mengunggah image ke Github Container Registry
+docker push "$container_registry/$username/$repository:$tag"
