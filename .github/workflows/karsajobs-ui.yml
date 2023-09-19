@@ -8,13 +8,17 @@ on:
   workflow_dispatch:
 # menentukan apa saja yg ada dlm pipeline
 jobs:
-  # melakukan check Dockerfile dengan menggunakan hadolint
+  # langkah untuk lint-dockerfile
   lint-dockerfile:
     # menggunakan self hosted runner dengan label dicoding-microservices dan self-hosted
     runs-on: [self-hosted, dicoding-microservices]
     steps:
+      # checkout repo
+      - name: check out repo 
+        uses: actions/checkout@v3
+      # mengecek Dockerfile dengan menggunakan hadolint
       - name: check Dockerfile dengan menggunakan hadolint
         uses: hadolint/hadolint-action@v3.1.0
         with:
           # path Dockerfile
-          dockerfile: ./Dockerfile
+          dockerfile: Dockerfile
