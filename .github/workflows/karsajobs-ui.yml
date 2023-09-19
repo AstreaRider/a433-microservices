@@ -26,6 +26,8 @@ jobs:
   build-app-karsajobs-ui:
     # menggunakan self hosted runner dengan label dicoding-microservices dan self-hosted
     runs-on: [self-hosted, dicoding-microservices]
+    # agar langkah build-app-karsajobs-ui dijalankan setelah lint-dockerfile
+    needs: lint-dockerfile
     steps:
       # Login ghcr
       - name: login to ${{ vars.CR_URL }}
