@@ -17,4 +17,4 @@ jobs:
         uses: hadolint/hadolint-action@v3.1.0
         with:
           # path Dockerfile
-          dockerfile: Dockerfile
+          dockerfile: ./Dockerfile
