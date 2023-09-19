@@ -1,0 +1,16 @@
+# nama pipeline
+name: Karsajobs CI Pipepline 
+# trigger pipeline otomatis ketika ada push ke branch karsajobs
+on:
+  push:
+    branches: [ "karsajobs" ]
+  # agar pipeline bisa di-trigger secara manual melalui Tab Actions
+  workflow_dispatch:
+# menentukan apa saja yg ada dlm pipeline
+jobs:
+  # melakukan check pada Dockerfile dengan menggunakan hadolint
+  lint-dockerfile:
+    uses: hadolint/hadolint-action@v3.1.0
+    with:
+      # path Dockerfile
+      dockerfile: Dockerfile
