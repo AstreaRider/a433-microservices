@@ -1,9 +1,9 @@
 # nama pipeline
-name: Karsajobs CI Pipepline 
+name: Karsajobs UI CI Pipepline 
 # trigger pipeline otomatis ketika ada push ke branch karsajobs
 on:
   push:
-    branches: [ "karsajobs" ]
+    branches: [ "karsajobs-ui" ]
   # agar pipeline bisa di-trigger secara manual melalui Tab Actions
   workflow_dispatch:
 # menentukan apa saja yg ada dlm pipeline
