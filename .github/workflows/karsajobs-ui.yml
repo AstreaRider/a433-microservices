@@ -31,9 +31,9 @@ jobs:
       - name: login to ${{ vars.CR_URL }}
         uses: docker/login-action@v2
         with:
-          container_registry: ${{ vars.CR_URL }}
+          registry: ${{ vars.CR_URL }}
           username: ${{ secrets.CR_USERNAME }}
-          token: ${{ secrets.CR_PAT }}   
+          password: ${{ secrets.CR_PAT }}   
       # Image Metadata
       - name: ${{ vars.CR_REPOSITORY_UI }} metadata
         id: meta
