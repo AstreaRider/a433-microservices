@@ -45,7 +45,6 @@ jobs:
       - name: build and push docker image ${{ vars.CR_REPOSITORY_UI }}
         uses: docker/build-push-action@v3
         with:
-          context: ./${{ vars.CR_REPOSITORY_UI }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
