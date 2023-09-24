@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . /app
 # Menginstall dependensi yang dibutuhkan
 RUN npm install
-# expose port 3000
+# expose port 3001
 EXPOSE 3001
 # menjalankan perintah untuk memulai aplikasi order service
 CMD ["npm", "start"]
