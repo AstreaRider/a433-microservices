@@ -71,33 +71,21 @@ jobs:
           # registry: ${{ vars.CR_URL }}
           username: ${{ secrets.CR_USERNAME }}
           password: ${{ secrets.CR_PAT }}
-      - name: build image
-        run: docker build -t ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }} .
-      - name: scan image using docker scout
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh
-          sh install-scout.sh
-          docker scout quickview
-          docker scout cves
-      - name: push image
-        run: |
-          docker push ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
-
-      # - name: build and push docker image ${{ vars.CR_REPOSITORY }}
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     push: true
-      #     tags: |
-      #       ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
-      #       ${{ env.IMAGE }}:${{ steps.prep.outputs.LATEST_ID }} 
-      # - name: Docker Scout
-      #   id: docker-scout
-      #   uses: docker/scout-action@v1.2.2
-      #   with:
-      #     command: cves
-      #     image: ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
-      #     only-severities: critical,high
-      #     exit-code: true
+      - name: build and push docker image ${{ vars.CR_REPOSITORY }}
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
+            ${{ env.IMAGE }}:${{ steps.prep.outputs.LATEST_ID }} 
+      - name: Docker Scout
+        id: docker-scout
+        uses: docker/scout-action@v1.2.2
+        with:
+          command: cves
+          image: ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
+          only-severities: critical,high
+          exit-code: true
 
       
       
