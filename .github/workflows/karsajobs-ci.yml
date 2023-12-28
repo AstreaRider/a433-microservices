@@ -46,7 +46,7 @@ jobs:
 
   build-app:
     env:
-      IMAGE: ${{ vars.CR_URL }}/${{ secrets.CR_USERNAME }}/${{ vars.CR_REPOSITORY }}
+      IMAGE: ${{ secrets.CR_USERNAME }}/${{ vars.CR_REPOSITORY }}
     needs: [test-app, lint-dockerfile, code-scanning]
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +64,6 @@ jobs:
       - name: login to ${{ vars.CR_URL }}
         uses: docker/login-action@v2
         with:
-          registry: ${{ vars.CR_URL }}
           username: ${{ secrets.CR_USERNAME }}
           password: ${{ secrets.CR_PAT }}
       - name: build and push docker image ${{ vars.CR_REPOSITORY }}
