@@ -80,7 +80,7 @@ jobs:
           command: cves
           image: ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
           only-severities: critical,high
-          # exit-code: true
+          exit-code: true
 
       
       
