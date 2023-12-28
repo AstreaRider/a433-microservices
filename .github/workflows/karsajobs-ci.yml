@@ -43,3 +43,33 @@ jobs:
           go-version: '1.21.4'
       - name: execute karsajobs test
         run: go test -v -short --count=1 $(go list ./...)
+
+  build-app:
+    env:
+      IMAGE: ${{ vars.CR_URL }}/${{ secrets.CR_USERNAME }}/${{ vars.CR_REPOSITORY }}
+    needs: test-app
+    runs-on: ubuntu-latest
+    steps:
+      - name: prepare image metadata
+        id: prep
+        run: |
+          BRANCH=${GITHUB_REF##*/}
+          TS=$(date +%s)
+          BUILD_ID="${BRANCH}-${TS}"
+          LATEST_ID=latest
+          echo BUILD_ID=${BUILD_ID} >> $GITHUB_OUTPUT
+          echo LATEST_ID=${LATEST_ID} >> $GITHUB_OUTPUT 
+      - name: login to ${{ vars.CR_URL }}
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ vars.CR_URL }}
+          username: ${{ secrets.CR_USERNAME }}
+          password: ${{ secrets.CR_PAT }}
+      - name: build and push docker image ${{ vars.CR_REPOSITORY }}
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
+            ${{ env.IMAGE }}:${{ steps.prep.outputs.LATEST_ID }} 
+      
