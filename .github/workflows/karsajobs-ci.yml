@@ -35,6 +35,8 @@ jobs:
   test-app:
     runs-on: ubuntu-latest
     steps:
+      - name: check out repo 
+        uses: actions/checkout@v3
       - name: Setup Go 1.21.4
         uses: actions/setup-go@v4
         with:
