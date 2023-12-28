@@ -1,0 +1,31 @@
+name: karsajobs CI
+on: 
+  push:
+    branches:
+      - "karsajobs"
+  workflow_dispatch:
+
+jobs:
+  lint-dockerfile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out repo 
+        uses: actions/checkout@v3
+      - name: check dockerfile using hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+
+  code-scanning:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out repo 
+        uses: actions/checkout@v3
+      - name: Run Gosec Security Scanner
+        uses: securego/gosec@master
+        with:
+          args: '-no-fail -fmt sarif -out results.sarif ./...'
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: results.sarif
