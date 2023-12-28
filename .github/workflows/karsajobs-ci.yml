@@ -72,4 +72,13 @@ jobs:
           tags: |
             ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
             ${{ env.IMAGE }}:${{ steps.prep.outputs.LATEST_ID }} 
+
+      - name: Docker Scout
+        id: docker-scout
+        uses: docker/scout-action@v1.2.2
+        with:
+          command: cves
+          image: ${{ env.IMAGE }}:${{ steps.prep.outputs.BUILD_ID }}
+          only-severities: critical,high
+          exit-code: true
       
