@@ -68,7 +68,7 @@ jobs:
       - name: login to ${{ vars.CR_URL }}
         uses: docker/login-action@v2
         with:
-          registry: ${{ vars.CR_URL }}
+          # registry: ${{ vars.CR_URL }}
           username: ${{ secrets.CR_USERNAME }}
           password: ${{ secrets.CR_PAT }}
       - name: build image
