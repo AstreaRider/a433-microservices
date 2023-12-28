@@ -52,10 +52,6 @@ jobs:
     steps:
       - name: check out repo 
         uses: actions/checkout@v3
-      - name: Set up Docker
-        uses: docker-practice/actions-setup-docker@v1
-        with:
-          docker_version: '20.10.7'
       - name: prepare image metadata
         id: prep
         run: |
@@ -68,7 +64,7 @@ jobs:
       - name: login to ${{ vars.CR_URL }}
         uses: docker/login-action@v2
         with:
-          # registry: ${{ vars.CR_URL }}
+          registry: ${{ vars.CR_URL }}
           username: ${{ secrets.CR_USERNAME }}
           password: ${{ secrets.CR_PAT }}
       - name: build and push docker image ${{ vars.CR_REPOSITORY }}
