@@ -24,8 +24,10 @@ jobs:
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
-          args: '-no-fail -fmt sarif -out results.sarif ./...'
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+          args: '-no-fail -fmt=json -out gosec-results.json ./...'
+      - name: upload artifatcs
+        uses: actions/upload-artifact@v3
+        if: always()
         with:
-          sarif_file: results.sarif
+          name: gosec-findings
+          path: gosec-results.json
