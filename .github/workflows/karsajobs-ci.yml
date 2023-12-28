@@ -47,7 +47,7 @@ jobs:
   build-app:
     env:
       IMAGE: ${{ vars.CR_URL }}/${{ secrets.CR_USERNAME }}/${{ vars.CR_REPOSITORY }}
-    needs: test-app
+    needs: [test-app, lint-dockerfile, code-scanning]
     runs-on: ubuntu-latest
     steps:
       - name: prepare image metadata
