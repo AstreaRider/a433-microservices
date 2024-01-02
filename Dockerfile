@@ -14,3 +14,4 @@ RUN mkdir /build; \
 
 EXPOSE 8080
 CMD ["/build/web"]
+
