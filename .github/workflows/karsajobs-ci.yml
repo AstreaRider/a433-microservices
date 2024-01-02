@@ -57,7 +57,7 @@ jobs:
   build-app:
     env:
       IMAGE: ${{ secrets.CR_USERNAME }}/${{ vars.CR_REPOSITORY }}
-    needs: [test-app, lint-dockerfile, code-scanning]
+    needs: [test-app, lint-dockerfile, gitleaks-scanning, gosec-scanning]
     runs-on: ubuntu-latest
     steps:
       - name: check out repo 
